@@ -25,18 +25,18 @@ int rZero;
 int sample_duration = 100;
 
 //set //lcd display
-const int rs = 4, en = 6, d4 = 10, d5 = 11, d6 = 12, d7 = 13; //Mention the pin number for //lcd connection
-//LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+const int rs = D2, en = D3, d4 = D9, d5 = D7, d6 = D6, d7 = D5;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 void setup() {
-  Serial.begin(74880);
-  //lcd.begin(16, 2);
-  //lcd.print(" Arduino Wattmeter");
+  //Serial.begin(74880);
+  lcd.begin(16, 2);
+  lcd.print(" Arduino Wattmeter");
   
   rZero = calibrate();
   
   delay(2000);
-  //lcd.clear();
+  lcd.clear();
   
   setup_wifi("Family Mejia Vallejo", "hmejia68");
   client.setServer(mqtt_server, 11703);
@@ -54,10 +54,12 @@ void loop() {
   double power = get_power(ampsRMS);
 
   //print to //lcd screen
-  //lcd.setCursor(0, 0);
-  //lcd.print("I="); //lcd.print(ampsRMS); //lcd.print("A");
-  //lcd.setCursor(0, 1);
-  //lcd.print("Power="); //lcd.print(power); //lcd.print("W");
+  lcd.setCursor(0, 0);
+  lcd_print(&lcd, ampsRMS, "A=");
+  lcd.setCursor(0, 1);
+  lcd_print(&lcd, power, "W=");
+ 
+  delay(100);
 
   //publish readings
   snprintf (msg_amps, 10, "%f", ampsRMS);
@@ -66,4 +68,5 @@ void loop() {
   delay(100);
   client.publish(publish_power, msg_pow);
   delay(100);
+
 }
