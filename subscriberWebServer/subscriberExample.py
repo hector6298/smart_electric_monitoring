@@ -4,13 +4,13 @@ import json
 from paho.mqtt import client as mqtt_client
 
 
-broker = 'o5018d87.en.emqx.cloud'
+broker = 'YOUR_BROKER_URL'
 port = 11703
 topic = "current"
 # generate client ID with pub prefix randomly
-client_id = f'hector'
-username = 'hector'
-password = 'hector'
+client_id = f'CLIENT_ID'
+username = 'YOUR_USER'
+password = 'YOUR_PASS'
 
 
 def connect_mqtt() -> mqtt_client:
