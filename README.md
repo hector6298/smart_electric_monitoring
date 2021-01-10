@@ -17,7 +17,7 @@ To recreate the device refer to CONSTRUCTION.md. Tinier, version coming!.
 
 Open publisherSensor on your arduino IDE, then flash publisherSensor.ino on your wemos D1 R1.
 
-Note that we make use of MQTT communicaiton protocol to publish the power and current measurements of devices being monitored. Therefore you should create an MQTT broker with a topic named 'current'.
+Note that we make use of MQTT communication protocol to publish the power and current measurements of devices being monitored. Therefore you should create an MQTT broker with a topic named 'current'.
 
 Please visit [iotikos](iotikos.org), or [emqx cloud](cloud.emqx.io), they offer creation of nodes free of charge.
 
@@ -28,3 +28,4 @@ cd subscriberWebServer
 python3 app.py
 ```
 Go to: [http://127.0.0.1:8050/](http://127.0.0.1:8050/)
+More to come!
