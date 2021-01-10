@@ -1,13 +1,12 @@
-# python3.6
 
 import random
-
+import json
 from paho.mqtt import client as mqtt_client
 
 
 broker = 'o5018d87.en.emqx.cloud'
 port = 11703
-topic = "power"
+topic = "current"
 # generate client ID with pub prefix randomly
 client_id = f'hector'
 username = 'hector'
@@ -30,7 +29,8 @@ def connect_mqtt() -> mqtt_client:
 
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
-        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        string = json.loads(msg.payload.decode())
+        print(f"Received {string['current']} from {msg.topic} topic")
 
     client.subscribe(topic)
     client.on_message = on_message

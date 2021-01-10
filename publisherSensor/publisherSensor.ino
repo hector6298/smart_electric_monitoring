@@ -1,6 +1,14 @@
+#include <NTPClient.h>
 #include <LiquidCrystal.h>
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <ArduinoJson.h>
+#include <WiFiUdp.h>
+
+//Time variables
+const long utcOffsetInSeconds = 3600;
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 
 //MQTT variables
 const char* mqtt_user = "hector";
@@ -12,9 +20,6 @@ const char* reset_topic = "rset";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
-long lastMsg = 0;
-char msg_amps[10];
-char msg_pow[10];
 
 int status = WL_IDLE_STATUS;     // the starting Wifi radio's status
 
@@ -40,33 +45,41 @@ void setup() {
   
   setup_wifi("Family Mejia Vallejo", "hmejia68");
   client.setServer(mqtt_server, 11703);
-  
+
+  timeClient.begin();
 }
 
 void loop() {
+  
   if (!client.connected()) {
     reconnect(mqtt_user, mqtt_pass, reset_topic);
   }
   client.loop();
-
+  
   //get current and power measures
   double ampsRMS = ac_read(sample_duration, rZero);  
   double power = get_power(ampsRMS);
 
+  //get current time
+  timeClient.update();
+  String t = timeClient.getFormattedTime();
+
+  //make json to send to mqtt broker
+  DynamicJsonDocument root(1024);
+  root["time"] = t;
+  root["current"] = ampsRMS;
+  root["power"] = power;
+  char message[100];
+  serializeJson(root, message);
+  
   //print to //lcd screen
   lcd.setCursor(0, 0);
   lcd_print(&lcd, ampsRMS, "A=");
   lcd.setCursor(0, 1);
   lcd_print(&lcd, power, "W=");
  
-  delay(100);
-
   //publish readings
-  snprintf (msg_amps, 10, "%f", ampsRMS);
-  snprintf (msg_pow, 10, "%f", power);
-  client.publish(publish_current, msg_amps);
-  delay(100);
-  client.publish(publish_power, msg_pow);
-  delay(100);
+  client.publish(publish_current, message);
+  delay(1000);
 
 }
