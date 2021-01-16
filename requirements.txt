@@ -2,4 +2,4 @@ flask
 plotly
 dash
 pandas
-paho
+paho-mqtt
