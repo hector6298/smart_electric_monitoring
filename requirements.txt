@@ -3,3 +3,4 @@ plotly
 dash
 pandas
 paho
+sqlalchemy
