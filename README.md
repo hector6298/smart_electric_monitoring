@@ -45,8 +45,20 @@ Current implementation here is a bit rough. Mainly because it was build with wha
 - 2 of those plastic boxes where you put electrical stuff.
 
 After you gather all this, connect everything according to this diagram :
-![alt text](https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/circuit.png)
+<img src="https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/circuit.png" width="500" height="375">
+
 That AC-DC box in the drawing is actually the power supply where you connect your microcontroller and the ACS712 sensor to power them.
+
 Some building pics:
+
 <img src="https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/20210106_192013.jpg" width="500" height="375">
 
+Those were the basic internals of the circuit, without the lcd screen. now, connecting the lcd screen and fitting everything inside:
+
+<img src="https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/20210107_160654.jpg" width="500" height="375">
+
+Final product:
+
+<img src="https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/20210111_223153.jpg" width="500" height="375">
+
+Please do not judge me. I am sure you can do something more breautiful, and I as well. Just wait for the next version!
