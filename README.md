@@ -44,7 +44,7 @@ Current implementation here is a bit rough. Mainly because it was build with wha
 - 24 AWG wire
 - A socket
 - A Phase, neutral and ground plug with some cord.
-- Some screw terminals two connect wires.
+- Some screw terminals to connect wires.
 - Rocker switch
 - 2 of those plastic boxes where you put electrical stuff.
 
