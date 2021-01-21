@@ -15,7 +15,7 @@ sudo pip3 install -r requirements.txt
 ```
 Now follow these steps:
 
-1.- To recreate the device refer to CONSTRUCTION.md. Tinier, version coming!.
+1.- To recreate the device refer to construction section. Tinier, version coming!.
 
 2.- Open publisherSensor on your arduino IDE, then flash publisherSensor.ino on your wifi-capable microcontroller.
 
@@ -28,3 +28,23 @@ python3 app.py -broker YOUR_BROKER -port PORT -user YOUR_MQTT_USERNAME -psswd YO
 ```
 5.- Go to: [http://127.0.0.1:8050/](http://127.0.0.1:8050/)
 More to come!
+
+## Construction
+
+Current implementation here is a bit rough. Mainly because it was build with what I had at the time. Materials are:
+- Wemos D1 R1 microcontroller
+- ACS712 30A current sensor
+- Power supply for the microcontroller. (In my case I striped a power supply from its case and cut the wires from the plug and jack)
+- LCD screen 
+- Male-Female jumper wires
+- 24 AWG wire
+- A socket
+- A Phase, neutral and ground plug with some cord.
+- Some screw terminals two connect wires.
+- Rocker switch
+- 2 of those plastic boxes where you put electrical stuff.
+
+After you gather all this, connect everything according to this diagram :
+![alt text](https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/circuit.png)
+That AC-DC box in the drawing is actually the power supply where you connect your microcontroller and the ACS712 sensor to power them.
+Some building pics:
