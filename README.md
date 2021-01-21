@@ -48,5 +48,5 @@ After you gather all this, connect everything according to this diagram :
 ![alt text](https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/circuit.png)
 That AC-DC box in the drawing is actually the power supply where you connect your microcontroller and the ACS712 sensor to power them.
 Some building pics:
-<img src="https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/20210106_192013.jpg" width="250" height="250">
+<img src="https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/20210106_192013.jpg" width="500" height="375">
 
