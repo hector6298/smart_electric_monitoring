@@ -8,8 +8,12 @@ Clone the repo on your local machine:
 git clone https://github.com/hector6298/smart_electric_monitoring.git
 cd smart_electric_monitoring
 ```
+Include your microcontroller model on Boards Manager on your Arduino IDE.
+Install the following library on Arduino IDE as well:
+```
+ArduinoJson
+```
 Then install python required dependencies:
-
 ```
 sudo pip3 install -r requirements.txt
 ```
