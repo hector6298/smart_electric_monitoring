@@ -13,19 +13,18 @@ Then install python required dependencies:
 ```
 sudo pip3 install -r requirements.txt
 ```
-To recreate the device refer to CONSTRUCTION.md. Tinier, version coming!.
+Now follow these steps:
 
-Open publisherSensor on your arduino IDE, then flash publisherSensor.ino on your wemos D1 R1.
+1.- To recreate the device refer to CONSTRUCTION.md. Tinier, version coming!.
 
-Note that we make use of MQTT communication protocol to publish the power and current measurements of devices being monitored. Therefore you should create an MQTT broker with a topic named 'current'.
+2.- Open publisherSensor on your arduino IDE, then flash publisherSensor.ino on your wifi-capable microcontroller.
 
-Please visit [iotikos](iotikos.org), or [emqx cloud](cloud.emqx.io), they offer creation of nodes free of charge.
+3.- Note that we make use of MQTT communication protocol to publish the power and current measurements of devices being monitored. Therefore you should create an MQTT broker with  topics named 'current', 'power', and 'reset'. Please visit [iotikos](iotikos.org), or [emqx cloud](cloud.emqx.io), they offer creation of nodes free of charge.
 
-After MQTT broker is set:
+4.- After MQTT broker is set:
 ```
 cd subscriberWebServer
-//change macros on app.py, to fit your MQTT setup (topic, broker, user credentials)
-python3 app.py
+python3 app.py -broker YOUR_BROKER -port PORT -user YOUR_MQTT_USERNAME -psswd YOUR_MQTT_PASS
 ```
-Go to: [http://127.0.0.1:8050/](http://127.0.0.1:8050/)
+5.- Go to: [http://127.0.0.1:8050/](http://127.0.0.1:8050/)
 More to come!
