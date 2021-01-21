@@ -17,6 +17,7 @@ from dash.dependencies import Input, Output
 from dataviz.timeseries import Timeseries
 from dash.exceptions import PreventUpdate
 from paho.mqtt import client as mqtt_client
+from sqlalchemy import create_engine, MetaData, Table, Column, Time, Float
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-broker", help="The broker address to connect to")
@@ -32,6 +33,22 @@ TOPIC = "current"
 CLIENT_ID = args.user
 USERNAME = args.user
 PASSWORD = args.psswd
+
+#create sql engine. CHange table creation and parameters as you see fit. For testing, sqlite is used
+engine = create_engine("sqlite+pysqlite:///:memory:", echo=True, future=True)
+meta = MetaData()
+master_record = Table(
+   'master_record', meta, 
+   Column('time', Time, primary_key = True), 
+   Column('current', Float), 
+   Column('power', Float),
+)
+meta.create_all(engine)
+
+# we will acumulate the historic data in dataframes and the users inside dicts.
+master_df = pd.DataFrame(columns=['time', 'username', 'current', 'power']).set_index('time')
+available_users = dict()
+slicer = 0
 
 def create_mqtt_client() -> mqtt_client:
 
@@ -54,7 +71,12 @@ def create_mqtt_client() -> mqtt_client:
             available_users[json_map["username"]] = pd.DataFrame(columns=['time', 'username', 'current', 'power']).set_index('time')
         available_users[json_map["username"]] = available_users[json_map["username"]].append(json_map, ignore_index=True)
         master_df = master_df.append(json_map, ignore_index=True)
-
+        with engine.connect() as conn:
+            conn.execute(
+                text(f"INSERT INTO master_record VALUES (:time, :current, :power)"),
+                [{"time": json_map["time"], "current": json_map["current"], "power": json_map["power"]}]
+            )
+            conn.commit()
         print(f"Received `{json_string}` from `{msg.topic}` topic")
 
     #define callback for when clients gets disconnected
@@ -87,13 +109,9 @@ def create_mqtt_client() -> mqtt_client:
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-# we will acumulate the historic data in dataframes and the users inside dicts.
-master_df = pd.DataFrame(columns=['time', 'username', 'current', 'power']).set_index('time')
-available_users = dict()
-slicer = 0
-
-#create client
+#create client and start loop on another thread
 client = create_mqtt_client()
+client.loop_start()
 
 # styling constants
 colors = {
@@ -102,11 +120,10 @@ colors = {
 }
 
 # generating html layout
-timeseries = Timeseries(pd.DataFrame(columns=['time', 'username', 'current', 'power']).set_index('time'), 'power_consumption', y=available_users.keys)
-timeseries.add_dropdrown(
-    'Select username', 'tw-dropdown', available_users.keys)
+timeseries = Timeseries(pd.DataFrame(columns=['time', 'username', 'current', 'power']).set_index('time'), 
+                                    'power_consumption', x="time", y="power")
+timeseries.add_dropdrown('Select username', 'tw-dropdown', available_users.keys)
 timeseries.add_interval('tw-refresh', 1)
-
 app.layout = html.Div( style={'backgroundColor': colors['background']}, children=[
 
     # header element
@@ -148,12 +165,12 @@ def update_tw_timeseries(n, selected_user):
     global master_df
     global available_users
 
-    client.loop()
     # applies dropdown filter
     if selected_user and selected_user != "all":
-        electric_lines = px.line(available_users[selected_user], y=f"{selected_user}")
+        electric_lines = px.line(available_users[selected_user], x="time", y="power")
     else:
-        electric_lines = px.line(master_df, y=available_users.keys)
+        temp_df = master_df.groupby("time").sum()
+        electric_lines = px.line(temp_df, x="time", y="power")
 
     electric_lines.update_layout(
         plot_bgcolor=colors['background'],
