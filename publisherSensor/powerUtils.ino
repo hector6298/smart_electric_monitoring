@@ -11,7 +11,7 @@ double ac_read(int sampleDuration, int rZero) {
     sampleCount++;
   }
   double voltRMS = 5.0 * sqrt(rSquaredSum / sampleCount) / 1024.0;
-  double ampsRMS = (voltRMS *66.0);
+  double ampsRMS = (voltRMS*66.0);
   return ampsRMS;
 }
 

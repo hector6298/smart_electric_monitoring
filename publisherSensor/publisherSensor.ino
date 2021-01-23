@@ -11,9 +11,9 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 
 //MQTT variables
-const char* mqtt_user = "hector";
-const char* mqtt_pass = "hector";
-const char* mqtt_server = "o5018d87.en.emqx.cloud";
+const char mqtt_user[16] = "YOUR_USER";
+const char* mqtt_pass = "YOUR_PASS";
+const char* mqtt_server = "YOUR_BROKER";
 const char* publish_power = "power";
 const char* publish_current = "current";
 const char* reset_topic = "rset";
@@ -43,7 +43,7 @@ void setup() {
   delay(2000);
   lcd.clear();
   
-  setup_wifi("Family Mejia Vallejo", "hmejia68");
+  setup_wifi("YOUR_SSID", "YOUR_WIFI_PASS");
   client.setServer(mqtt_server, 11703);
 
   timeClient.begin();
@@ -67,8 +67,10 @@ void loop() {
   //make json to send to mqtt broker
   DynamicJsonDocument root(1024);
   root["time"] = t;
+  root["username"] = mqtt_user;
   root["current"] = ampsRMS;
   root["power"] = power;
+
   char message[100];
   serializeJson(root, message);
   
