@@ -23,7 +23,7 @@ Now follow these steps:
 
 2.- Open publisherSensor on your arduino IDE, then flash publisherSensor.ino on your wifi-capable microcontroller.
 
-3.- Note that we make use of MQTT communication protocol to publish the power and current measurements of devices being monitored. Therefore you should create an MQTT broker with  topics named 'current', 'power', and 'reset'. Please visit [iotikos](iotikos.org), or [emqx cloud](cloud.emqx.io), they offer creation of nodes free of charge.
+3.- Note that we make use of MQTT communication protocol to publish the power and current measurements of devices being monitored. Therefore you should create an MQTT broker with  topics named 'current', 'power', and 'reset'. Please visit [ioticos](https://ioticos.org/), or [emqx cloud](https://cloud.emqx.io/), they offer creation of nodes free of charge.
 
 4.- After MQTT broker is set:
 ```
