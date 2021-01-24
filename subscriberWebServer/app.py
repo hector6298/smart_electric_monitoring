@@ -14,7 +14,7 @@ import time
 import argparse
 
 from dash.dependencies import Input, Output
-from dataviz.timeseries import Timeseries
+from dataviz.timeseries import Timeseries, multiInstanceTimeseries
 from dash.exceptions import PreventUpdate
 from paho.mqtt import client as mqtt_client
 #from sqlalchemy import create_engine, MetaData, Table, Column, Time, Float
@@ -56,7 +56,7 @@ colors = {
 }
 
 # generating html layout
-timeseries = Timeseries(columns=['time', 'username', 'current', 'power'],
+timeseries = multiInstanceTimeseries(columns=['time', 'username', 'current', 'power'],
                         timeseries_figure_id='power_consumption', x="time", y="power")
 timeseries.add_dropdrown('Select username', 'tw-dropdown', ["sherald", "jose", "valery", "fernando", "luis", "leduin", "franz", "hector"])
 timeseries.add_interval('tw-refresh', 1)
