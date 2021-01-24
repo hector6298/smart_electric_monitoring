@@ -11,12 +11,12 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 
 //MQTT variables
-const char mqtt_user[16] = "YOUR_USER";
-const char* mqtt_pass = "YOUR_PASS";
-const char* mqtt_server = "YOUR_BROKER";
+const char mqtt_user[16] = "hector";
+const char* mqtt_pass = "hector";
+const char* mqtt_server = "o5018d87.en.emqx.cloud";
 const char* publish_power = "power";
 const char* publish_current = "current";
-const char* reset_topic = "rset";
+const char* reset_topic = "reset";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -43,7 +43,7 @@ void setup() {
   delay(2000);
   lcd.clear();
   
-  setup_wifi("YOUR_SSID", "YOUR_WIFI_PASS");
+  setup_wifi("Family Mejia Vallejo", "hmejia68");
   client.setServer(mqtt_server, 11703);
 
   timeClient.begin();
