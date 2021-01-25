@@ -30,7 +30,12 @@ Now follow these steps:
 cd subscriberWebServer
 python3 app.py -broker YOUR_BROKER -port PORT -user YOUR_MQTT_USERNAME -psswd YOUR_MQTT_PASS
 ```
-5.- Go to: [http://127.0.0.1:8050/](http://127.0.0.1:8050/)
+5.- Go to: [http://127.0.0.1:8050/](http://127.0.0.1:8050/). There should be a screen similar to this, but at first, the graph should be empty:
+
+<img src="https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/webScreenshot.png" width="500" height="375">
+
+Navigate to your user using the drop-down menu above the graph.
+
 More to come!
 
 ## Construction
