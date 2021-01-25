@@ -166,7 +166,7 @@ def update_tw_timeseries(n, selected_user):
         electric_lines = timeseries.get_figure_by_key(selected_user, x="time", y="power")
     else:
         temp_df = timeseries.data.groupby("time").sum()
-        electric_lines = px.line(temp_df, x="time", y="power")
+        electric_lines = px.line(temp_df, y="power")
 
     electric_lines.update_layout(
         plot_bgcolor=colors['background'],
