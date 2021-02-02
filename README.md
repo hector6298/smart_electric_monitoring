@@ -1,4 +1,4 @@
-# IoT Smart Electric Monitoring (currently under development)
+# IoT Smart Electric Monitoring 
 This project aims at developing devices to measure electric power consumption from other domestic devices simultaneously, then publishing their readings to an MQTT broker, to finally visualize readings on a web page.
 
 ## Getting started
