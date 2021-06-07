@@ -1,4 +1,4 @@
-# IoT Smart Electric Monitoring (currently under development)
+# IoT Smart Electric Monitoring 
 This project aims at developing devices to measure electric power consumption from other domestic devices simultaneously, then publishing their readings to an MQTT broker, to finally visualize readings on a web page.
 
 ## Getting started
@@ -23,14 +23,19 @@ Now follow these steps:
 
 2.- Open publisherSensor on your arduino IDE, then flash publisherSensor.ino on your wifi-capable microcontroller.
 
-3.- Note that we make use of MQTT communication protocol to publish the power and current measurements of devices being monitored. Therefore you should create an MQTT broker with  topics named 'current', 'power', and 'reset'. Please visit [iotikos](iotikos.org), or [emqx cloud](cloud.emqx.io), they offer creation of nodes free of charge.
+3.- Note that we make use of MQTT communication protocol to publish the power and current measurements of devices being monitored. Therefore you should create an MQTT broker with  topics named 'current', 'power', and 'reset'. Please visit [ioticos](https://ioticos.org/), or [emqx cloud](https://cloud.emqx.io/), they offer creation of nodes free of charge.
 
 4.- After MQTT broker is set:
 ```
 cd subscriberWebServer
 python3 app.py -broker YOUR_BROKER -port PORT -user YOUR_MQTT_USERNAME -psswd YOUR_MQTT_PASS
 ```
-5.- Go to: [http://127.0.0.1:8050/](http://127.0.0.1:8050/)
+5.- Go to: [http://127.0.0.1:8050/](http://127.0.0.1:8050/). There should be a screen similar to this, but at first, the graph should be empty:
+
+<img src="https://github.com/hector6298/smart_electric_monitoring/blob/master/assets/webScreenshot.png" width="500" height="375">
+
+Navigate to your user using the drop-down menu above the graph.
+
 More to come!
 
 ## Construction
